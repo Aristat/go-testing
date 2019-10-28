@@ -1,2 +1,0 @@
-# github.com/google/wire v0.3.0
-github.com/google/wire
