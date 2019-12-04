@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/Aristat/go-testing/cmd/file_examples"
+
 	"github.com/Aristat/go-testing/cmd/chan_examples"
 
 	"github.com/spf13/cobra"
@@ -18,7 +20,7 @@ var rootCmd = &cobra.Command{
 }
 
 func Execute() {
-	rootCmd.AddCommand(chan_examples.Cmd)
+	rootCmd.AddCommand(chan_examples.Cmd, file_examples.Cmd)
 	if err := rootCmd.Execute(); err != nil {
 		_, _ = fmt.Fprintf(os.Stderr, "%v\n", err.Error())
 		os.Exit(1)
