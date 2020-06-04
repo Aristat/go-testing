@@ -16,7 +16,7 @@ var (
 		SilenceErrors: true,
 		Run: func(_ *cobra.Command, _ []string) {
 			ch := make(chan int)
-			done := make(chan struct{}) // create DONE channel
+			done := make(chan struct{})
 
 			var wg sync.WaitGroup
 
