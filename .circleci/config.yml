@@ -1,0 +1,67 @@
+version: 2.1
+jobs:
+  test:
+    docker:
+      - image: circleci/golang:1.14
+    steps:
+      - checkout
+      - run:
+          name: Fetch dependencies
+          command: go mod download
+      - run:
+          name: Test
+          command: go test
+  build:
+    docker:
+      - image: circleci/golang:1.14
+    working_directory: ~/go-testing
+    steps:
+      - checkout
+      - run:
+          name: Fetch dependencies
+          command: go mod download
+      - run:
+          name: Building
+          # TODO: other archs/oses
+          command: |
+            VERSION=${CIRCLE_TAG}
+            GOOS=linux GOARCH=amd64 go build -ldflags "-X main.Version=${VERSION}" -o bin/go-testing-${VERSION}-linux-amd64 main.go
+            GOOS=linux GOARCH=386 go build -ldflags "-X main.Version=${VERSION}" -o bin/go-testing-${VERSION}-linux-386 main.go
+            GOOS=darwin GOARCH=amd64 go build -ldflags "-X main.Version=${VERSION}" -o bin/go-testing-${VERSION}-darwin-amd64 main.go
+            GOOS=darwin GOARCH=386 go build -ldflags "-X main.Version=${VERSION}" -o bin/go-testing-${VERSION}-darwin-386 main.go
+      - persist_to_workspace:
+          root: .
+          paths:
+            - bin
+  publish-github-release:
+    docker:
+      - image: cibuilds/github:0.13
+    steps:
+      - attach_workspace:
+          at: ~/go-testing
+      - run:
+          name: "Publish Release on GitHub"
+          command: |
+            VERSION=${CIRCLE_TAG}
+            ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete ${VERSION} ~/go-testing/bin
+workflows:
+  version: 2
+  main:
+    jobs:
+      - test
+  release:
+    jobs:
+      - build:
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v\d+\.\d+\.\d+.*/
+      - publish-github-release:
+          requires:
+            - build
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v\d+\.\d+\.\d+.*/
