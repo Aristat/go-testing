@@ -22,7 +22,6 @@ jobs:
           command: go mod download
       - run:
           name: Building
-          # TODO: other archs/oses
           command: |
             VERSION=${CIRCLE_TAG}
             GOOS=linux GOARCH=amd64 go build -ldflags "-X main.Version=${VERSION}" -o bin/go-testing-${VERSION}-linux-amd64 main.go
