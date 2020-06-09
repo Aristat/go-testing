@@ -2,6 +2,9 @@
   "name": "go-testing",
   "version": "0.0.0-development",
   "description": "",
+  "scripts": {
+    "semantic-release": "./node_modules/.bin/semantic-release.js"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/Aristat/go-testing.git"
