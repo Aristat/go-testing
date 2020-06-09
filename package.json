@@ -19,8 +19,7 @@
   "release": {
     "branches": [
       "master",
-      "next",
-      "test-semantic"
+      "next"
     ]
   }
 }
