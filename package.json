@@ -1,0 +1,23 @@
+{
+  "name": "go-testing",
+  "version": "0.0.0-development",
+  "description": "",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Aristat/go-testing.git"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Aristat/go-testing/issues"
+  },
+  "homepage": "https://github.com/Aristat/go-testing#readme",
+  "dependencies": {
+    "semantic-release-cli": "^5.3.1"
+  },
+  "scripts": {
+    "semantic-release": "semantic-release"
+  },
+  "devDependencies": {
+    "semantic-release": "^17.0.8"
+  }
+}
