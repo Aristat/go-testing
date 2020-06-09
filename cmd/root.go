@@ -16,7 +16,7 @@ var rootCmd = &cobra.Command{
 	Long:          "",
 	SilenceUsage:  true,
 	SilenceErrors: true,
-	Short:         "Example codes",
+	Short:         "Example codess",
 }
 
 func Execute() {
